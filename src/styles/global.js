@@ -4,9 +4,9 @@ export default createGlobalStyle`
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 
   * {
-    margin: 0;
-    padding: 0;
-    outline: 0;
+    margin: 0 !important;
+    padding: 0 !important;
+    outline: 0 !important;
     box-sizing: border-box;
   }
 
@@ -20,7 +20,6 @@ export default createGlobalStyle`
   }
 
   #root {
-    max-width: 1020px;
     margin: 0 auto;
     padding: 0 20px 50px;
   }
