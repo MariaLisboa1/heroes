@@ -74,7 +74,6 @@ export const Card = styled.div`
   margin: 40px 20px;
   background: #151515;
   border-radius: 5px;
-  cursor: pointer;
 
   img {
     width: 191px;
@@ -82,22 +81,25 @@ export const Card = styled.div`
     border-bottom: 2px solid red;
   }
 
-  div {
-    h3 {
-      text-transform: uppercase;
-      margin: 10px 5px;
-    }
+  h3 {
+    text-transform: uppercase;
+    margin: 10px 5px;
+  }
 
-    P {
-      padding: 35px 10px;
-      font-size: 12px;
-      color: #bbb;
-      font-weight: bold;
+  a {
+    color: #f0141e;
+    font-size: 16px;
+    text-decoration: none;
+    text-align: center;
+
+    &:hover {
+      color: #910c12;
     }
   }
 `;
 
 export const CardGroup = styled.div`
   display: flex;
+  flex-wrap: wrap;
   color: #fff;
 `;

@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 import _ from 'lodash';
+import md5 from 'md5';
+import api from '../../services/api';
 
 import captain from '../../assets/images/captainAmerica.jpg';
 
@@ -12,29 +15,25 @@ export default class Home extends Component {
     searchHero: [],
   };
 
-  componentDidMount() {
-    const listHeroes = [
-      {
-        id: 1,
-        name: 'maria',
-        description:
-          'É um super-herói de histórias em quadrinhos americanos publicado pela Marvel Comics.',
-      },
-      {
-        id: 2,
-        name: 'nazare',
-        description:
-          'É um super-herói de histórias em quadrinhos americanos publicado pela Marvel Comics.',
-      },
-      {
-        id: 3,
-        name: 'capitao',
-        description:
-          'É um super-herói de histórias em quadrinhos americanos publicado pela Marvel Comics.',
-      },
-    ];
+  async componentDidMount() {
+    const timestamp = Number(new Date());
+    const publicKey = '160bee6a45bed990aecb5bfaa63e1fdb';
+    const privateKey = 'aa8008b9e811354653df6e60452c7f659a4c187a';
 
-    this.setState({ heroes: listHeroes, searchHero: listHeroes });
+    const hash = md5(timestamp + privateKey + publicKey);
+
+    const response = await api.get(
+      `/v1/public/characters?ts=${timestamp}&apikey=${publicKey}&hash=${hash}`,
+      {
+        params: {
+          limit: '20',
+          offset: '0',
+        },
+      }
+    );
+
+    const heroes = response.data.data.results;
+    this.setState({ heroes, searchHero: heroes });
   }
 
   search = (event) => {
@@ -71,12 +70,13 @@ export default class Home extends Component {
         <CardGroup>
           {searchHero.map((hero) => (
             <Card key={hero.id}>
-              <img src={captain} alt="Capitão America" />
-              <div>
-                <h3>{hero.name}</h3>
+              <img
+                src={`${hero.thumbnail.path}.${hero.thumbnail.extension}`}
+                alt={hero.name}
+              />
+              <h3>{hero.name}</h3>
 
-                <p>{hero.description}</p>
-              </div>
+              <Link to="/">Detalhes</Link>
             </Card>
           ))}
         </CardGroup>
