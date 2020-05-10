@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 import _ from 'lodash';
@@ -17,7 +18,7 @@ import {
   Loading,
 } from './styles';
 
-export default class Home extends Component {
+class Home extends Component {
   state = {
     heroes: [],
     page: 0,
@@ -84,6 +85,15 @@ export default class Home extends Component {
     this.debouncedFn();
   };
 
+  handleDetails = (hero) => {
+    const { dispatch } = this.props;
+
+    dispatch({
+      type: 'HERO_DETAIL',
+      hero,
+    });
+  };
+
   handlePage = (page) => {
     if (page === 0) {
       return this.setState({
@@ -129,7 +139,9 @@ export default class Home extends Component {
               />
               <h3>{hero.name}</h3>
 
-              <Link to="/">Detalhes</Link>
+              <Link onClick={() => this.handleDetails(hero)} to="/details">
+                Detalhes
+              </Link>
             </Card>
           ))}
         </CardGroup>
@@ -144,3 +156,5 @@ export default class Home extends Component {
     );
   }
 }
+
+export default connect()(Home);
