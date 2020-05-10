@@ -65,6 +65,13 @@ export const SubmitButton = styled.button.attrs((props) => ({
     `}
 `;
 
+export const CardGroup = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  color: #fff;
+  justify-content: center;
+`;
+
 export const Card = styled.div`
   display: flex;
   flex-direction: column;
@@ -98,8 +105,50 @@ export const Card = styled.div`
   }
 `;
 
-export const CardGroup = styled.div`
+export const ButtonList = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  color: #fff;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+`;
+
+export const Button = styled.button.attrs((props) => ({
+  disabled: props.lastPage,
+}))`
+  margin-right: 5px;
+  background: #151515;
+  border: 0;
+  padding: 10px 15px;
+  margin-left: 10px;
+  border-radius: 4px;
+  color: white;
+
+  &:hover,
+  &:focus {
+    background: #544f4f;
+  }
+
+  &[disabled] {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+`;
+
+export const NoHaveHero = styled.div`
+  text-align: center;
+  margin-top: 10px;
+  font-weight: bold;
+  color: red;
+`;
+
+export const Loading = styled.div`
+  margin: 0 auto;
+  border: 8px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #151515;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: ${rotate} 2s linear infinite;
+
+  }
 `;

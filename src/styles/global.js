@@ -9,6 +9,7 @@ export default createGlobalStyle`
   }
 
   html, body, #root {
+    scroll-behavior: smooth;
     min-height: 100%;
   }
 
