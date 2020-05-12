@@ -24,5 +24,7 @@ module.exports = {
     'no-param-reassign': 'off',
     'no-console': ['error', { allow: ['tron'] }],
     'react/state-in-constructor': 'off',
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
   },
 };

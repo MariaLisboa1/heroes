@@ -1,17 +1,3 @@
-export function allHeroesRequest(page) {
-  return {
-    type: '@hero/ALL_REQUEST',
-    page,
-  };
-}
-
-export function allHeroesSuccess(hero) {
-  return {
-    type: '@hero/ALL_SUCCESS',
-    hero,
-  };
-}
-
 export function addSerie(serie) {
   return {
     type: '@hero/ADD_SERIE',

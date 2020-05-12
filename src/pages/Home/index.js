@@ -33,12 +33,7 @@ class Home extends Component {
   };
 
   async componentDidMount() {
-    const { allHeroesRequest } = await this.props;
-    await allHeroesRequest(0);
-    const { hero } = await this.props;
-
-    // this.getAllCharacters(0);
-    console.log(hero);
+    this.getAllCharacters(0);
   }
 
   getAllCharacters = async (page) => {
