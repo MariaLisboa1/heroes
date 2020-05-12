@@ -17,8 +17,6 @@ import * as HeroActions from '../../store/modules/hero/actions';
 import { Container, Form, FormAddSerie, SubmitButton, Button } from './styles';
 
 function EditHero({ hero, removeSerie, addSerie }) {
-  console.log(hero);
-
   const [newSerie, setNewSerie] = useState('');
 
   const useStylesTable = makeStyles({
