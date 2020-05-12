@@ -59,6 +59,8 @@ export const Container = styled.div`
   }
 `;
 
+export const FormContainer = styled.div``;
+
 export const Form = styled.form`
   display: flex;
   max-width: 500px;
@@ -105,25 +107,3 @@ export const SubmitButton = styled.button.attrs((props) => ({
       }
     `}
 `;
-
-// export const Button = styled.button.attrs((props) => ({
-//   disabled: props.lastPage,
-// }))`
-//   background: #151515;
-//   border: 0;
-//   padding: 10px 15px;
-//   border-radius: 4px;
-//   color: white;
-//   width: 50%;
-//   margin: 10px auto;
-
-//   &:hover,
-//   &:focus {
-//     background: #544f4f;
-//   }
-
-//   &[disabled] {
-//     cursor: not-allowed;
-//     opacity: 0.6;
-//   }
-// `;

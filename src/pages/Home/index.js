@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
@@ -28,11 +29,11 @@ class Home extends Component {
     lastPage: true,
     loading: true,
     timestamp: Number(new Date()),
-    publicKey: '160bee6a45bed990aecb5bfaa63e1fdb',
-    privateKey: 'aa8008b9e811354653df6e60452c7f659a4c187a',
+    publicKey: '3188e31e20f58598e6092f23c96ea3d1',
+    privateKey: '1e3f01d0a43d1993b305911ec15531a2bb638f30',
   };
 
-  async componentDidMount() {
+  componentDidMount() {
     this.getAllCharacters(0);
   }
 
@@ -111,7 +112,7 @@ class Home extends Component {
       });
     }
 
-    this.getAllCharacters(page);
+    this.getCharacters(page);
     window.scrollTo(0, 0);
     return this.setState({
       lastPage: false,
@@ -126,7 +127,7 @@ class Home extends Component {
       <Container>
         <h1>HEROES</h1>
 
-        <Form onChange={this.search}>
+        <Form onChange={() => this.search}>
           <input type="text" placeholder="Hero" />
 
           <SubmitButton>
@@ -170,6 +171,14 @@ class Home extends Component {
     );
   }
 }
+
+Home.propTypes = {
+  hero: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+    })
+  ).isRequired,
+};
 
 const mapStateToProps = (state) => ({
   hero: state.hero,

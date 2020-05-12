@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { makeStyles } from '@material-ui/core/styles';
@@ -15,7 +16,13 @@ import Paper from '@material-ui/core/Paper';
 import { Link } from 'react-router-dom';
 import * as HeroActions from '../../store/modules/hero/actions';
 
-import { Container, Form, FormAddSerie, SubmitButton } from './styles';
+import {
+  Container,
+  FormContainer,
+  Form,
+  FormAddSerie,
+  SubmitButton,
+} from './styles';
 
 function EditHero({ hero, removeSerie, addSerie, overwriteNameDescription }) {
   const [newSerie, setNewSerie] = useState('');
@@ -47,9 +54,9 @@ function EditHero({ hero, removeSerie, addSerie, overwriteNameDescription }) {
   return (
     <Container>
       {hero.map((editHero) => (
-        <>
+        <FormContainer key={editHero.id}>
           <h1>Editar Herói</h1>
-          <Form className={useStylesForm.root} key={editHero.id}>
+          <Form className={useStylesForm.root}>
             <TextField
               label="Herói"
               defaultValue={editHero.name}
@@ -108,11 +115,22 @@ function EditHero({ hero, removeSerie, addSerie, overwriteNameDescription }) {
               Salvar
             </Link>
           </div>
-        </>
+        </FormContainer>
       ))}
     </Container>
   );
 }
+
+EditHero.propTypes = {
+  hero: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+    })
+  ).isRequired,
+  removeSerie: PropTypes.func.isRequired,
+  addSerie: PropTypes.func.isRequired,
+  overwriteNameDescription: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   hero: state.hero,
