@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Container, Detail, ImageThumbnail, HeroDetails } from './styles';
 
@@ -29,6 +30,26 @@ function Details({ hero }) {
     </Container>
   );
 }
+
+Details.propTypes = {
+  hero: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      thumbnail: PropTypes.shape({
+        path: PropTypes.string,
+        extension: PropTypes.string,
+      }).isRequired,
+      serie: PropTypes.shape({
+        items: PropTypes.arrayOf(
+          PropTypes.shape({
+            resourceURI: PropTypes.string,
+            name: PropTypes.string,
+          })
+        ),
+      }),
+    })
+  ).isRequired,
+};
 
 export default connect((state) => ({
   hero: state.hero,
