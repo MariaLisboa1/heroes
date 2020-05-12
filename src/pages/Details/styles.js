@@ -4,7 +4,9 @@ export const Container = styled.div`
   margin: 0 auto;
 `;
 
-export const Detail = styled.div``;
+export const Detail = styled.div`
+  padding-bottom: 70px;
+`;
 
 export const ImageThumbnail = styled.div`
   width: 100%;
