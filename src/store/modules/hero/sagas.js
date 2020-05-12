@@ -10,6 +10,14 @@ function* getAllHero({ hero }) {
   yield put(getHeroByIdSuccess(hero));
 }
 
+// function* addHero({hero}) {
+//     produce(hero, (draft) => {
+//       let series = hero[0].series.items;
+//       series = [...series, serie];
+//       draft[0].series.items = series;
+//     });
+// }
+
 export default all([
   takeLatest('@hero/BY_ID_REQUEST', getHeroById),
   takeLatest('@hero/ALL_REQUEST', getAllHero),

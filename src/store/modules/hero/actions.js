@@ -12,6 +12,20 @@ export function allHeroesSuccess(hero) {
   };
 }
 
+export function addSerie(serie) {
+  return {
+    type: '@hero/ADD_SERIE',
+    serie,
+  };
+}
+
+export function removeSerie(resourceURI) {
+  return {
+    type: '@hero/REMOVE_SERIE',
+    resourceURI,
+  };
+}
+
 export function getHeroByIdRequest(hero) {
   return {
     type: '@hero/BY_ID_REQUEST',

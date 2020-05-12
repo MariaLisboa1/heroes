@@ -16,7 +16,9 @@ import * as HeroActions from '../../store/modules/hero/actions';
 
 import { Container, Form, FormAddSerie, SubmitButton, Button } from './styles';
 
-function EditHero({ hero }) {
+function EditHero({ hero, removeSerie, addSerie }) {
+  console.log(hero);
+
   const [newSerie, setNewSerie] = useState('');
 
   const useStylesTable = makeStyles({
@@ -36,12 +38,8 @@ function EditHero({ hero }) {
 
   function addNewSerie(e) {
     e.preventDefault();
-    const serie = { resourceURI: '', name: newSerie };
-    let series = hero[0].series.items;
-    series = [...series, serie];
-    hero[0].series.items = series;
-
-    HeroActions.allHeroesRequest(hero);
+    const serie = { resourceURI: newSerie, name: newSerie };
+    addSerie(serie);
     setNewSerie('');
   }
 
@@ -79,7 +77,10 @@ function EditHero({ hero }) {
                     <TableCell component="th" scope="row" align="center">
                       {serie.name}
                     </TableCell>
-                    <TableCell align="center">
+                    <TableCell
+                      align="center"
+                      onClick={() => removeSerie(serie.resourceURI)}
+                    >
                       <MdDelete color="#FFF" size={20} />
                     </TableCell>
                   </TableRow>
