@@ -110,6 +110,7 @@ export const ButtonList = styled.div`
   justify-content: center;
   align-items: center;
   margin-top: 10px;
+  padding-bottom: 70px;
 `;
 
 export const Button = styled.button.attrs((props) => ({
@@ -149,6 +150,4 @@ export const Loading = styled.div`
   width: 50px;
   height: 50px;
   animation: ${rotate} 2s linear infinite;
-
-  }
 `;

@@ -7,6 +7,7 @@ import './config/ReactotronConfig';
 
 import GlobalStyle from './styles/global';
 import Header from './components/Header';
+import Footer from './components/Footer';
 import Routes from './routes';
 
 import store from './store';
@@ -16,6 +17,7 @@ function App() {
     <Provider store={store}>
       <BrowserRouter>
         <Header />
+        <Footer />
         <Routes />
         <GlobalStyle />
         <ToastContainer autoClose={3000} />

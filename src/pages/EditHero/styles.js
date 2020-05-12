@@ -38,6 +38,7 @@ export const Container = styled.div`
   .div-link {
     width: 100%;
     padding-top: 10px;
+    padding-bottom: 70px;
     margin: 0 auto;
     text-align: center;
     a {
