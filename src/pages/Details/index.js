@@ -23,16 +23,6 @@ function Details({ hero }) {
             {detail.series.items.map((serie) => (
               <p key={serie.resourceURI}> {serie.name}</p>
             ))}
-
-            <h1>Comics</h1>
-            {detail.comics.items.map((comic) => (
-              <p key={comic.resourceURI}> {comic.name}</p>
-            ))}
-
-            <h1>Historias</h1>
-            {detail.stories.items.map((storie) => (
-              <p key={storie.resourceURI}> {storie.name}</p>
-            ))}
           </HeroDetails>
         </Detail>
       ))}

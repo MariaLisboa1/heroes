@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 import _ from 'lodash';
 import md5 from 'md5';
 import api from '../../services/api';
+
+import * as HeroActions from '../../store/modules/hero/actions';
 
 import {
   Container,
@@ -48,7 +51,17 @@ class Home extends Component {
       }
     );
 
-    const heroes = response.data.data.results;
+    const { hero } = this.props;
+
+    let heroes = response.data.data.results;
+
+    if (hero.length > 0) {
+      const filterHero = heroes.filter(
+        (heroFilter) => heroFilter.id !== hero[0].id
+      );
+      heroes = filterHero.concat(hero);
+    }
+
     this.setState({ heroes, loading: false });
   };
 
@@ -86,12 +99,9 @@ class Home extends Component {
   };
 
   handleDetails = (hero) => {
-    const { dispatch } = this.props;
+    const { getHeroByIdRequest } = this.props;
 
-    dispatch({
-      type: 'HERO_DETAIL',
-      hero,
-    });
+    getHeroByIdRequest(hero);
   };
 
   handlePage = (page) => {
@@ -142,6 +152,10 @@ class Home extends Component {
               <Link onClick={() => this.handleDetails(hero)} to="/details">
                 Detalhes
               </Link>
+
+              <Link onClick={() => this.handleDetails(hero)} to="/editHero">
+                Editar
+              </Link>
             </Card>
           ))}
         </CardGroup>
@@ -157,4 +171,11 @@ class Home extends Component {
   }
 }
 
-export default connect()(Home);
+const mapStateToProps = (state) => ({
+  hero: state.hero,
+});
+
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(HeroActions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
