@@ -1,7 +1,7 @@
-export function allHeroesRequest(hero) {
+export function allHeroesRequest(page) {
   return {
     type: '@hero/ALL_REQUEST',
-    hero,
+    page,
   };
 }
 
@@ -16,6 +16,14 @@ export function addSerie(serie) {
   return {
     type: '@hero/ADD_SERIE',
     serie,
+  };
+}
+
+export function overwriteNameDescription(name, description) {
+  return {
+    type: '@hero/OVERWRITE_NAME_DESC',
+    name,
+    description,
   };
 }
 

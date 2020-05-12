@@ -32,8 +32,13 @@ class Home extends Component {
     privateKey: 'aa8008b9e811354653df6e60452c7f659a4c187a',
   };
 
-  componentDidMount() {
-    this.getAllCharacters(0);
+  async componentDidMount() {
+    const { allHeroesRequest } = await this.props;
+    await allHeroesRequest(0);
+    const { hero } = await this.props;
+
+    // this.getAllCharacters(0);
+    console.log(hero);
   }
 
   getAllCharacters = async (page) => {
@@ -111,7 +116,7 @@ class Home extends Component {
       });
     }
 
-    this.getCharacters(page);
+    this.getAllCharacters(page);
     window.scrollTo(0, 0);
     return this.setState({
       lastPage: false,

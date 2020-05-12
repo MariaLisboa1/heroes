@@ -12,12 +12,15 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import { Link } from 'react-router-dom';
 import * as HeroActions from '../../store/modules/hero/actions';
 
-import { Container, Form, FormAddSerie, SubmitButton, Button } from './styles';
+import { Container, Form, FormAddSerie, SubmitButton } from './styles';
 
-function EditHero({ hero, removeSerie, addSerie }) {
+function EditHero({ hero, removeSerie, addSerie, overwriteNameDescription }) {
   const [newSerie, setNewSerie] = useState('');
+  const [nameHero, setNameHero] = useState('');
+  const [descriptionHero, setDescriptionHero] = useState('');
 
   const useStylesTable = makeStyles({
     table: {
@@ -47,9 +50,17 @@ function EditHero({ hero, removeSerie, addSerie }) {
         <>
           <h1>Editar Herói</h1>
           <Form className={useStylesForm.root} key={editHero.id}>
-            <TextField label="Herói" defaultValue={editHero.name} />
+            <TextField
+              label="Herói"
+              defaultValue={editHero.name}
+              onChange={(e) => setNameHero(e.target.value || '')}
+            />
 
-            <TextField label="Descrição" defaultValue={editHero.description} />
+            <TextField
+              label="Descrição"
+              defaultValue={editHero.description}
+              onChange={(e) => setDescriptionHero(e.target.value || '')}
+            />
           </Form>
           <FormAddSerie onSubmit={addNewSerie}>
             <TextField
@@ -87,7 +98,16 @@ function EditHero({ hero, removeSerie, addSerie }) {
             </Table>
           </TableContainer>
 
-          <Button>Salvar</Button>
+          <div className="div-link">
+            <Link
+              onClick={() =>
+                overwriteNameDescription(nameHero, descriptionHero)
+              }
+              to="/"
+            >
+              Salvar
+            </Link>
+          </div>
         </>
       ))}
     </Container>

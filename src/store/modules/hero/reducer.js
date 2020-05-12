@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 export default function hero(state = [], action) {
   switch (action.type) {
     case '@hero/ALL_SUCCESS':
-      return [action.hero];
+      return action.hero;
     case '@hero/BY_ID_SUCCESS':
       return [action.hero];
     case '@hero/REMOVE_SERIE':
@@ -29,6 +29,11 @@ export default function hero(state = [], action) {
         let series = state[0].series.items;
         series = [...series, action.serie];
         draft[0].series.items = series;
+      });
+    case '@hero/OVERWRITE_NAME_DESC':
+      return produce(state, (draft) => {
+        draft[0].name = action.name;
+        draft[0].description = action.description;
       });
     default:
       return state;

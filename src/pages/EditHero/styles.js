@@ -8,6 +8,7 @@ export const Container = styled.div`
     text-align: center;
     color: #202020;
   }
+
   form,
   div {
     max-width: 500px;
@@ -31,6 +32,29 @@ export const Container = styled.div`
 
     td {
       cursor: pointer;
+    }
+  }
+
+  .div-link {
+    width: 100%;
+    padding-top: 10px;
+    margin: 0 auto;
+    text-align: center;
+    a {
+      display: block;
+      background: #151515;
+      border: 0;
+      padding: 10px 15px;
+      border-radius: 4px;
+      color: white;
+      width: 500px;
+      margin: 10px auto;
+      text-decoration: none;
+
+      &:hover,
+      &:focus {
+        background: #544f4f;
+      }
     }
   }
 `;
@@ -82,24 +106,24 @@ export const SubmitButton = styled.button.attrs((props) => ({
     `}
 `;
 
-export const Button = styled.button.attrs((props) => ({
-  disabled: props.lastPage,
-}))`
-  background: #151515;
-  border: 0;
-  padding: 10px 15px;
-  border-radius: 4px;
-  color: white;
-  width: 50%;
-  margin: 10px auto;
+// export const Button = styled.button.attrs((props) => ({
+//   disabled: props.lastPage,
+// }))`
+//   background: #151515;
+//   border: 0;
+//   padding: 10px 15px;
+//   border-radius: 4px;
+//   color: white;
+//   width: 50%;
+//   margin: 10px auto;
 
-  &:hover,
-  &:focus {
-    background: #544f4f;
-  }
+//   &:hover,
+//   &:focus {
+//     background: #544f4f;
+//   }
 
-  &[disabled] {
-    cursor: not-allowed;
-    opacity: 0.6;
-  }
-`;
+//   &[disabled] {
+//     cursor: not-allowed;
+//     opacity: 0.6;
+//   }
+// `;
