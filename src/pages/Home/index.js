@@ -34,6 +34,7 @@ class Home extends Component {
   };
 
   componentDidMount() {
+    localStorage.clear();
     this.getAllCharacters(0);
   }
 
@@ -125,10 +126,10 @@ class Home extends Component {
 
     return (
       <Container>
-        <h1>HEROES</h1>
+        <h1>HERÓIS</h1>
 
         <Form onChange={() => this.search}>
-          <input type="text" placeholder="Hero" />
+          <input type="text" placeholder="Herói" />
 
           <SubmitButton>
             <FaSearch color="#FFF" size={14} />
@@ -178,6 +179,7 @@ Home.propTypes = {
       id: PropTypes.number.isRequired,
     })
   ).isRequired,
+  getHeroByIdRequest: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({

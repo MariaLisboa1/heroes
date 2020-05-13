@@ -1,12 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Container, Detail, ImageThumbnail, HeroDetails } from './styles';
 
 function Details({ hero }) {
+  const [heroDetail, setHeroDetail] = useState([]);
+
+  function saveStorage() {
+    const storageHero = localStorage.getItem('hero');
+
+    if (storageHero && storageHero.length > 2)
+      return setHeroDetail(JSON.parse(storageHero));
+
+    setHeroDetail(hero);
+    return localStorage.setItem('hero', JSON.stringify(hero));
+  }
+
+  useEffect(() => {
+    saveStorage();
+  }, []);
+
   return (
     <Container>
-      {hero.map((detail) => (
+      {heroDetail.map((detail) => (
         <Detail key={detail.id}>
           <ImageThumbnail>
             <img
