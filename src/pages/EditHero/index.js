@@ -15,7 +15,6 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { Link } from 'react-router-dom';
 import * as HeroActions from '../../store/modules/hero/actions';
-
 import history from '../../services/history';
 import {
   Container,
