@@ -24,6 +24,21 @@ export const ImageThumbnail = styled.div`
     width: 364px;
     height: 403px;
   }
+
+  @media (min-width: 320px) and (max-width: 480px) {
+    flex-direction: column;
+    width: 100%;
+    img {
+      padding: 0;
+      margin: 0 auto;
+      max-width: 100%;
+      max-height: 250px;
+    }
+
+    h1 {
+      margin: 10px 0;
+    }
+  }
 `;
 
 export const HeroDetails = styled.div`
@@ -36,5 +51,9 @@ export const HeroDetails = styled.div`
 
   p {
     margin-top: 10px;
+  }
+
+  @media (min-width: 320px) and (max-width: 480px) {
+    padding: 25px;
   }
 `;

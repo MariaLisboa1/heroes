@@ -58,6 +58,14 @@ export const Container = styled.div`
       }
     }
   }
+
+  @media (min-width: 320px) and (max-width: 480px) {
+    .div-link {
+      a {
+        width: auto;
+      }
+    }
+  }
 `;
 
 export const FormContainer = styled.div``;
@@ -66,6 +74,13 @@ export const Form = styled.form`
   display: flex;
   max-width: 500px;
   margin: 10px auto;
+
+  @media (min-width: 320px) and (max-width: 480px) {
+    flex-direction: column;
+    input {
+      margin-right: 100px;
+    }
+  }
 `;
 
 const rotate = keyframes`
@@ -83,6 +98,14 @@ export const FormAddSerie = styled.form`
   align-items: baseline;
   max-width: 300px;
   width: 300px;
+
+  @media (min-width: 320px) and (max-width: 480px) {
+    flex-direction: column;
+
+    input {
+      margin-right: 100px;
+    }
+  }
 `;
 
 export const SubmitButton = styled.button.attrs((props) => ({
@@ -107,6 +130,11 @@ export const SubmitButton = styled.button.attrs((props) => ({
         animation: ${rotate} 2s linear infinite;
       }
     `}
+  @media (min-width: 320px) and (max-width: 480px) {
+    height: 35px;
+    margin: 0 auto;
+    width: 20%;
+  }
 `;
 
 export const Loading = styled.div`
