@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 import _ from 'lodash';
 import md5 from 'md5';
+import { toast } from 'react-toastify';
 import api from '../../services/api';
 
 import * as HeroActions from '../../store/modules/hero/actions';
@@ -43,28 +44,33 @@ class Home extends Component {
 
     const hash = md5(timestamp + privateKey + publicKey);
 
-    const response = await api.get(
-      `/v1/public/characters?ts=${timestamp}&apikey=${publicKey}&hash=${hash}`,
-      {
-        params: {
-          limit: '20',
-          offset: page,
-        },
-      }
-    );
-
-    const { hero } = this.props;
-
-    let heroes = response.data.data.results;
-
-    if (hero.length > 0) {
-      const filterHero = heroes.filter(
-        (heroFilter) => heroFilter.id !== hero[0].id
+    try {
+      const response = await api.get(
+        `/v1/public/characters?ts=${timestamp}&apikey=${publicKey}&hash=${hash}`,
+        {
+          params: {
+            limit: '20',
+            offset: page,
+          },
+        }
       );
-      heroes = filterHero.concat(hero);
-    }
 
-    this.setState({ heroes, loading: false });
+      const { hero } = this.props;
+
+      let heroes = response.data.data.results;
+
+      if (hero.length > 0) {
+        const filterHero = heroes.filter(
+          (heroFilter) => heroFilter.id !== hero[0].id
+        );
+        heroes = filterHero.concat(hero);
+      }
+
+      this.setState({ heroes, loading: false });
+    } catch (error) {
+      this.setState({ loading: false });
+      toast.error('Ocorreu um erro, tente novamente mais tarde.');
+    }
   };
 
   getCharactersName = async (nameStartsWith) => {
@@ -72,16 +78,21 @@ class Home extends Component {
 
     const hash = md5(timestamp + privateKey + publicKey);
 
-    const response = await api.get(
-      `/v1/public/characters?ts=${timestamp}&apikey=${publicKey}&hash=${hash}`,
-      {
-        params: {
-          nameStartsWith,
-        },
-      }
-    );
-    const heroes = response.data.data.results;
-    this.setState({ heroes, loading: false });
+    try {
+      const response = await api.get(
+        `/v1/public/characters?ts=${timestamp}&apikey=${publicKey}&hash=${hash}`,
+        {
+          params: {
+            nameStartsWith,
+          },
+        }
+      );
+      const heroes = response.data.data.results;
+      this.setState({ heroes, loading: false });
+    } catch (error) {
+      this.setState({ loading: false });
+      toast.error('Ocorreu um erro, tente novamente mais tarde.');
+    }
   };
 
   search = (event) => {
@@ -161,13 +172,19 @@ class Home extends Component {
             </Card>
           ))}
         </CardGroup>
-
-        <ButtonList>
-          <Button lastPage={lastPage} onClick={() => this.handlePage(page - 1)}>
-            Anterior
-          </Button>
-          <Button onClick={() => this.handlePage(page + 1)}>Próxima</Button>
-        </ButtonList>
+        {heroes.length > 0 ? (
+          <ButtonList>
+            <Button
+              lastPage={lastPage}
+              onClick={() => this.handlePage(page - 1)}
+            >
+              Anterior
+            </Button>
+            <Button onClick={() => this.handlePage(page + 1)}>Próxima</Button>
+          </ButtonList>
+        ) : (
+          ''
+        )}
       </Container>
     );
   }
