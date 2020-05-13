@@ -6,19 +6,18 @@ import { Container, Detail, ImageThumbnail, HeroDetails } from './styles';
 function Details({ hero }) {
   const [heroDetail, setHeroDetail] = useState([]);
 
-  function saveStorage() {
-    const storageHero = localStorage.getItem('hero');
-
-    if (storageHero && storageHero.length > 2)
-      return setHeroDetail(JSON.parse(storageHero));
-
-    setHeroDetail(hero);
-    return localStorage.setItem('hero', JSON.stringify(hero));
-  }
-
   useEffect(() => {
+    function saveStorage() {
+      const storageHero = localStorage.getItem('hero');
+
+      if (storageHero && storageHero.length > 2)
+        return setHeroDetail(JSON.parse(storageHero));
+
+      setHeroDetail(hero);
+      return localStorage.setItem('hero', JSON.stringify(hero));
+    }
     saveStorage();
-  }, []);
+  }, [hero]);
 
   return (
     <Container>
