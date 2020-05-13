@@ -108,3 +108,13 @@ export const SubmitButton = styled.button.attrs((props) => ({
       }
     `}
 `;
+
+export const Loading = styled.div`
+  margin: 0 auto;
+  border: 8px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #151515;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: ${rotate} 2s linear infinite;
+`;
