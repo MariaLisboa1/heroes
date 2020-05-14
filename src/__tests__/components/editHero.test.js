@@ -41,7 +41,7 @@ describe('EditHero page', () => {
     );
   });
 
-  it('should be able to change the heros name', () => {
+  it('should be able to change the heros name and description', () => {
     const { getByTestId, getByLabelText } = render(<EditHero />);
 
     const dispach = jest.fn();

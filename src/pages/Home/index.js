@@ -139,8 +139,8 @@ class Home extends Component {
       <Container>
         <h1>HERÓIS</h1>
 
-        <Form onChange={() => this.search}>
-          <input type="text" placeholder="Herói" />
+        <Form data-testid="hero-form" onChange={() => this.search}>
+          <input data-testid="hero-input" type="text" placeholder="Herói" />
 
           <SubmitButton>
             <FaSearch color="#FFF" size={14} />
@@ -160,7 +160,7 @@ class Home extends Component {
                 src={`${hero.thumbnail.path}.${hero.thumbnail.extension}`}
                 alt={hero.name}
               />
-              <h3>{hero.name}</h3>
+              <h3 data-testid="heros-name">{hero.name}</h3>
 
               <Link onClick={() => this.handleDetails(hero)} to="/details">
                 Detalhes
