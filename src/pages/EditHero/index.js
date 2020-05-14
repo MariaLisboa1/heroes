@@ -10,7 +10,6 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { BrowserRouter, Link } from 'react-router-dom';
 import * as HeroActions from '../../store/modules/hero/actions';
 import history from '../../services/history';
 import {
@@ -19,6 +18,7 @@ import {
   Form,
   FormAddSerie,
   SubmitButton,
+  ButtonSave,
 } from './styles';
 
 export default function EditHero() {
@@ -68,27 +68,27 @@ export default function EditHero() {
             data-testid="form-name-description"
             className={useStylesForm.root}
           >
-            <label htmlFor="heroName">Herói</label>
             <input
               type="text"
-              id="heroName"
-              value={heroName}
+              data-testid="heroName"
+              placeholder="Herói"
+              defaultValue={editHero.name}
               onChange={(e) => setHeroName(e.target.value || '')}
             />
 
-            <label htmlFor="heroDescription">Descrição</label>
             <input
-              id="heroDescription"
+              data-testid="heroDescription"
               type="text"
-              value={heroDescription}
+              placeholder="Descrição"
+              defaultValue={editHero.description}
               onChange={(e) => setHeroDescription(e.target.value || '')}
             />
           </Form>
           <FormAddSerie data-testid="series-form" onSubmit={addNewSerie}>
-            <label htmlFor="addSerie">Adicionar serie</label>
             <input
-              id="addSerie"
+              data-testid="addNewSerie"
               value={newSerie}
+              placeholder="Adicionar serie"
               onChange={(e) => setNewSerie(e.target.value || '')}
             />
             <SubmitButton>
@@ -129,24 +129,19 @@ export default function EditHero() {
             </Table>
           </TableContainer>
 
-          <div className="div-link">
-            <BrowserRouter>
-              <Link
-                data-testid="submit-name-description"
-                onClick={() =>
-                  dispatch(
-                    HeroActions.overwriteNameDescription(
-                      heroName,
-                      heroDescription
-                    )
-                  )
-                }
-                to="/"
-              >
-                Salvar
-              </Link>
-            </BrowserRouter>
-          </div>
+          {/* <div className="div-link"> */}
+          <ButtonSave
+            type="button"
+            data-testid="submit-name-description"
+            onClick={() =>
+              dispatch(
+                HeroActions.overwriteNameDescription(heroName, heroDescription)
+              )
+            }
+          >
+            Salvar
+          </ButtonSave>
+          {/* </div> */}
         </FormContainer>
       ))}
     </Container>

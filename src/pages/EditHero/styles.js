@@ -1,4 +1,4 @@
-import styled, { css, keyframes } from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 export const Container = styled.div`
   padding: 20px;
@@ -35,30 +35,6 @@ export const Container = styled.div`
     }
   }
 
-  .div-link {
-    width: 100%;
-    padding-top: 10px;
-    padding-bottom: 70px;
-    margin: 0 auto;
-    text-align: center;
-    a {
-      display: block;
-      background: #151515;
-      border: 0;
-      padding: 10px 15px;
-      border-radius: 4px;
-      color: white;
-      width: 500px;
-      margin: 10px auto;
-      text-decoration: none;
-
-      &:hover,
-      &:focus {
-        background: #544f4f;
-      }
-    }
-  }
-
   @media (min-width: 320px) and (max-width: 480px) {
     .div-link {
       a {
@@ -74,11 +50,29 @@ export const Form = styled.form`
   display: flex;
   max-width: 500px;
   margin: 10px auto;
+  justify-content: center;
+
+  input {
+    border: 1px solid #eee;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+
+  input + input {
+    margin-left: 5px;
+  }
 
   @media (min-width: 320px) and (max-width: 480px) {
     flex-direction: column;
     input {
-      margin-right: 100px;
+      width: 100%;
+      text-align: center;
+      margin-bottom: 3px;
+    }
+
+    input + input {
+      margin: 0;
     }
   }
 `;
@@ -95,45 +89,60 @@ const rotate = keyframes`
 
 export const FormAddSerie = styled.form`
   display: flex;
+  justify-content: center;
   align-items: baseline;
   max-width: 300px;
-  width: 300px;
+  width: 320px;
+  margin: 0;
+
+  input {
+    margin-top: 10px;
+    border: 1px solid #eee;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-size: 16px;
+  }
 
   @media (min-width: 320px) and (max-width: 480px) {
     flex-direction: column;
-
+    margin: 0;
     input {
-      margin-right: 100px;
+      text-align: center;
+      width: 100%;
+      margin-bottom: 10px;
     }
   }
 `;
 
-export const SubmitButton = styled.button.attrs((props) => ({
-  type: 'submit',
-  disabled: props.loading,
-}))`
+export const SubmitButton = styled.button`
+  margin-left: 5px;
   background: #202020;
   border: 0;
   padding: 0 10px;
   height: 30px;
   border-radius: 4px;
 
-  &[disabled] {
-    cursor: not-allowed;
-    opacity: 0.6;
-  }
-
-  ${(props) =>
-    props.loading &&
-    css`
-      svg {
-        animation: ${rotate} 2s linear infinite;
-      }
-    `}
   @media (min-width: 320px) and (max-width: 480px) {
     height: 35px;
     margin: 0 auto;
     width: 20%;
+  }
+`;
+
+export const ButtonSave = styled.button`
+  background: #202020;
+  border: 0;
+  padding: 0 10px;
+  height: 30px;
+  border-radius: 4px;
+  color: white;
+  width: 500px;
+  margin-top: 10px;
+  margin-bottom: 50px;
+
+  &:hover,
+  &:focus {
+    background: #544f4f;
   }
 `;
 

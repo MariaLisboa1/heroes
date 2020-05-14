@@ -42,17 +42,17 @@ describe('EditHero page', () => {
   });
 
   it('should be able to change the heros name and description', () => {
-    const { getByTestId, getByLabelText } = render(<EditHero />);
+    const { getByTestId } = render(<EditHero />);
 
     const dispach = jest.fn();
 
     useDispatch.mockReturnValue(dispach);
 
-    fireEvent.change(getByLabelText('Herói'), {
+    fireEvent.change(getByTestId('heroName'), {
       target: { value: 'super maria' },
     });
 
-    fireEvent.change(getByLabelText('Descrição'), {
+    fireEvent.change(getByTestId('heroDescription'), {
       target: { value: 'heroina maria' },
     });
 
@@ -64,12 +64,12 @@ describe('EditHero page', () => {
   });
 
   it('should be able to add new serie', () => {
-    const { getByTestId, getByLabelText } = render(<EditHero />);
+    const { getByTestId } = render(<EditHero />);
     const dispach = jest.fn();
 
     useDispatch.mockReturnValue(dispach);
 
-    fireEvent.change(getByLabelText('Adicionar serie'), {
+    fireEvent.change(getByTestId('addNewSerie'), {
       target: { value: 'maria' },
     });
     const serie = { resourceURI: 'maria', name: 'maria' };

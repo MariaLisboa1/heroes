@@ -1,5 +1,6 @@
 import produce from 'immer';
 import { toast } from 'react-toastify';
+import history from '../../../services/history';
 
 export default function hero(state = [], action) {
   switch (action.type) {
@@ -30,8 +31,10 @@ export default function hero(state = [], action) {
       });
     case '@hero/OVERWRITE_NAME_DESC':
       return produce(state, (draft) => {
-        draft[0].name = action.name;
-        draft[0].description = action.description;
+        if (action.name) draft[0].name = action.name;
+
+        if (action.description) draft[0].description = action.description;
+        history.push('/');
       });
     default:
       return state;
