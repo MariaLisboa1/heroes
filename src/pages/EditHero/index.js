@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { FaPlus } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
-import TextField from '@material-ui/core/TextField';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -69,12 +68,6 @@ export default function EditHero() {
             data-testid="form-name-description"
             className={useStylesForm.root}
           >
-            {/* <TextField
-              data-testid="hero-input"
-              label="Herói"
-              defaultValue={editHero.name}
-              onChange={(e) => setNameHero(e.target.value || '')}
-            /> */}
             <label htmlFor="heroName">Herói</label>
             <input
               type="text"
@@ -90,21 +83,8 @@ export default function EditHero() {
               value={heroDescription}
               onChange={(e) => setHeroDescription(e.target.value || '')}
             />
-
-            {/* <TextField
-              data-testid="description-input"
-              label="Descrição"
-              defaultValue={editHero.description}
-              onChange={(e) => setDescriptionHero(e.target.value || '')}
-            /> */}
           </Form>
           <FormAddSerie data-testid="series-form" onSubmit={addNewSerie}>
-            {/* <TextField
-              aria-labelledby="Adicionar serie"
-              label="Adicionar serie"
-              value={newSerie}
-              onChange={(e) => setNewSerie(e.target.value || '')}
-            /> */}
             <label htmlFor="addSerie">Adicionar serie</label>
             <input
               id="addSerie"
