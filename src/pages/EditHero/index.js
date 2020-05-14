@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { FaPlus } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
@@ -13,7 +11,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { Link } from 'react-router-dom';
+import { BrowserRouter, Link } from 'react-router-dom';
 import * as HeroActions from '../../store/modules/hero/actions';
 import history from '../../services/history';
 import {
@@ -24,11 +22,14 @@ import {
   SubmitButton,
 } from './styles';
 
-function EditHero({ hero, removeSerie, addSerie, overwriteNameDescription }) {
+export default function EditHero() {
   const [newSerie, setNewSerie] = useState('');
-  const [nameHero, setNameHero] = useState('');
-  const [descriptionHero, setDescriptionHero] = useState('');
+  const [heroName, setHeroName] = useState('');
+  const [heroDescription, setHeroDescription] = useState('');
 
+  const hero = useSelector((state) => state.hero);
+
+  const dispatch = useDispatch();
   const useStylesTable = makeStyles({
     table: {
       minWidth: 650,
@@ -47,7 +48,7 @@ function EditHero({ hero, removeSerie, addSerie, overwriteNameDescription }) {
   function addNewSerie(e) {
     e.preventDefault();
     const serie = { resourceURI: newSerie, name: newSerie };
-    addSerie(serie);
+    dispatch(HeroActions.addSerie(serie));
     setNewSerie('');
   }
 
@@ -64,22 +65,49 @@ function EditHero({ hero, removeSerie, addSerie, overwriteNameDescription }) {
       {hero.map((editHero) => (
         <FormContainer key={editHero.id}>
           <h1>Editar Herói</h1>
-          <Form className={useStylesForm.root}>
-            <TextField
+          <Form
+            data-testid="form-name-description"
+            className={useStylesForm.root}
+          >
+            {/* <TextField
+              data-testid="hero-input"
               label="Herói"
               defaultValue={editHero.name}
               onChange={(e) => setNameHero(e.target.value || '')}
+            /> */}
+            <label htmlFor="heroName">Herói</label>
+            <input
+              type="text"
+              id="heroName"
+              value={heroName}
+              onChange={(e) => setHeroName(e.target.value || '')}
             />
 
-            <TextField
+            <label htmlFor="heroDescription">Descrição</label>
+            <input
+              id="heroDescription"
+              type="text"
+              value={heroDescription}
+              onChange={(e) => setHeroDescription(e.target.value || '')}
+            />
+
+            {/* <TextField
+              data-testid="description-input"
               label="Descrição"
               defaultValue={editHero.description}
               onChange={(e) => setDescriptionHero(e.target.value || '')}
-            />
+            /> */}
           </Form>
-          <FormAddSerie onSubmit={addNewSerie}>
-            <TextField
+          <FormAddSerie data-testid="series-form" onSubmit={addNewSerie}>
+            {/* <TextField
+              aria-labelledby="Adicionar serie"
               label="Adicionar serie"
+              value={newSerie}
+              onChange={(e) => setNewSerie(e.target.value || '')}
+            /> */}
+            <label htmlFor="addSerie">Adicionar serie</label>
+            <input
+              id="addSerie"
               value={newSerie}
               onChange={(e) => setNewSerie(e.target.value || '')}
             />
@@ -98,12 +126,20 @@ function EditHero({ hero, removeSerie, addSerie, overwriteNameDescription }) {
               <TableBody>
                 {editHero.series.items.map((serie) => (
                   <TableRow key={serie.name}>
-                    <TableCell component="th" scope="row" align="center">
+                    <TableCell
+                      component="th"
+                      scope="row"
+                      align="center"
+                      data-testid="series-name"
+                    >
                       {serie.name}
                     </TableCell>
                     <TableCell
+                      data-testid="remove-serie"
                       align="center"
-                      onClick={() => removeSerie(serie.resourceURI)}
+                      onClick={() =>
+                        dispatch(HeroActions.removeSerie(serie.resourceURI))
+                      }
                     >
                       <MdDelete color="#FFF" size={20} />
                     </TableCell>
@@ -114,37 +150,25 @@ function EditHero({ hero, removeSerie, addSerie, overwriteNameDescription }) {
           </TableContainer>
 
           <div className="div-link">
-            <Link
-              onClick={() =>
-                overwriteNameDescription(nameHero, descriptionHero)
-              }
-              to="/"
-            >
-              Salvar
-            </Link>
+            <BrowserRouter>
+              <Link
+                data-testid="submit-name-description"
+                onClick={() =>
+                  dispatch(
+                    HeroActions.overwriteNameDescription(
+                      heroName,
+                      heroDescription
+                    )
+                  )
+                }
+                to="/"
+              >
+                Salvar
+              </Link>
+            </BrowserRouter>
           </div>
         </FormContainer>
       ))}
     </Container>
   );
 }
-
-EditHero.propTypes = {
-  hero: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-    })
-  ).isRequired,
-  removeSerie: PropTypes.func.isRequired,
-  addSerie: PropTypes.func.isRequired,
-  overwriteNameDescription: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  hero: state.hero,
-});
-
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators(HeroActions, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(EditHero);
