@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 
 import { useSelector } from 'react-redux';
 import { Container, Detail, ImageThumbnail, HeroDetails } from './styles';
@@ -8,7 +8,7 @@ export default function Details() {
 
   const hero = useSelector((state) => state.hero);
 
-  function saveStorage() {
+  const saveStorage = useCallback(() => {
     const storageHero = localStorage.getItem('hero');
 
     if (storageHero && storageHero.length > 2)
@@ -16,11 +16,11 @@ export default function Details() {
 
     setHeroDetail(hero);
     return localStorage.setItem('hero', JSON.stringify(hero));
-  }
+  }, [hero]);
 
   useEffect(() => {
     saveStorage();
-  }, []);
+  }, [saveStorage]);
 
   return (
     <Container>
