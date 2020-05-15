@@ -4,13 +4,14 @@ import history from '../../../services/history';
 
 export default function hero(state = [], action) {
   switch (action.type) {
-    case '@hero/BY_ID_SUCCESS':
+    case '@hero/SELECT_SUCCESS':
       return [action.hero];
     case '@hero/REMOVE_SERIE':
       return produce(state, (draft) => {
         const findSerie = state[0].series.items.filter(
           (serie) => serie.resourceURI !== action.resourceURI
         );
+
         draft[0].series.items = [];
         draft[0].series.items = findSerie;
       });

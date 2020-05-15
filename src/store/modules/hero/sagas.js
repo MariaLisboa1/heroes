@@ -1,9 +1,9 @@
 import { put, all, takeLatest } from 'redux-saga/effects';
 
-import { getHeroByIdSuccess } from './actions';
+import { selectHeroSuccess } from './actions';
 
 function* getHeroById({ hero }) {
-  yield put(getHeroByIdSuccess(hero));
+  yield put(selectHeroSuccess(hero));
 }
 
-export default all([takeLatest('@hero/BY_ID_REQUEST', getHeroById)]);
+export default all([takeLatest('@hero/SELECT_REQUEST', getHeroById)]);

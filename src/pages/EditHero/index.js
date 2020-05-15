@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { makeStyles } from '@material-ui/core/styles';
+
 import { FaPlus } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 import Table from '@material-ui/core/Table';
@@ -19,6 +19,8 @@ import {
   FormAddSerie,
   SubmitButton,
   ButtonSave,
+  useStylesTable,
+  useStylesForm,
 } from './styles';
 
 export default function EditHero() {
@@ -29,20 +31,6 @@ export default function EditHero() {
   const hero = useSelector((state) => state.hero);
 
   const dispatch = useDispatch();
-  const useStylesTable = makeStyles({
-    table: {
-      minWidth: 650,
-    },
-  });
-
-  const useStylesForm = makeStyles((theme) => ({
-    root: {
-      '& > *': {
-        margin: theme.spacing(1),
-        width: '25ch',
-      },
-    },
-  }));
 
   function addNewSerie(e) {
     e.preventDefault();
@@ -52,11 +40,8 @@ export default function EditHero() {
   }
 
   useEffect(() => {
-    function checkHero() {
-      if (hero.length > 0) return;
-      history.push('/');
-    }
-    checkHero();
+    if (hero.length > 0) return;
+    history.push('/');
   }, [hero]);
 
   return (
@@ -128,8 +113,6 @@ export default function EditHero() {
               </TableBody>
             </Table>
           </TableContainer>
-
-          {/* <div className="div-link"> */}
           <ButtonSave
             type="button"
             data-testid="submit-name-description"
@@ -141,7 +124,6 @@ export default function EditHero() {
           >
             Salvar
           </ButtonSave>
-          {/* </div> */}
         </FormContainer>
       ))}
     </Container>

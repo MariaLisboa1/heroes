@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { render } from '@testing-library/react';
 
-import Details from '../../pages/Details';
+import HeroDetails from '../../pages/HeroDetails';
 
 jest.mock('react-redux');
 
@@ -37,7 +37,7 @@ describe('Detail page', () => {
         ],
       })
     );
-    const { getByTestId, getByText } = render(<Details />);
+    const { getByTestId, getByText } = render(<HeroDetails />);
 
     expect(getByTestId('hero-name')).toContainElement(getByText('3-D Man'));
     expect(getByTestId('hero-description')).toContainElement(

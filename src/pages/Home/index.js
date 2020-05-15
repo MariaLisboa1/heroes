@@ -5,9 +5,7 @@ import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 import _ from 'lodash';
-import md5 from 'md5';
-import { toast } from 'react-toastify';
-import api from '../../services/api';
+import Heroes from '../../services/api';
 
 import * as HeroActions from '../../store/modules/hero/actions';
 
@@ -29,74 +27,44 @@ class Home extends Component {
     page: 0,
     lastPage: true,
     loading: true,
-    timestamp: Number(new Date()),
-    publicKey: '3188e31e20f58598e6092f23c96ea3d1',
-    privateKey: '1e3f01d0a43d1993b305911ec15531a2bb638f30',
+    noHero: false,
   };
 
   componentDidMount() {
     localStorage.clear();
-    this.getAllCharacters(0);
+    this.getAllHeroes(0);
   }
 
-  getAllCharacters = async (page) => {
-    const { timestamp, publicKey, privateKey } = this.state;
-
-    const hash = md5(timestamp + privateKey + publicKey);
-
+  getAllHeroes = async (page) => {
     try {
-      const response = await api.get(
-        `/v1/public/characters?ts=${timestamp}&apikey=${publicKey}&hash=${hash}`,
-        {
-          params: {
-            limit: '20',
-            offset: page,
-          },
-        }
-      );
-
       const { hero } = this.props;
-
-      let heroes = response.data.data.results;
+      let newHeroes = await Heroes.getAllHeroes(page);
 
       if (hero.length > 0) {
-        const filterHero = heroes.filter(
-          (heroFilter) => heroFilter.id !== hero[0].id
+        const filteredHeroes = newHeroes.filter(
+          (newHero) => newHero.id !== hero[0].id
         );
-        heroes = filterHero.concat(hero);
+        newHeroes = filteredHeroes.concat(hero);
       }
 
-      this.setState({ heroes, loading: false });
+      this.setState({ heroes: newHeroes, loading: false, noHero: false });
     } catch (error) {
-      this.setState({ loading: false });
-      toast.error('Ocorreu um erro, tente novamente mais tarde.');
+      this.setState({ loading: false, noHero: true });
     }
   };
 
   getCharactersName = async (nameStartsWith) => {
-    const { timestamp, publicKey, privateKey } = this.state;
-
-    const hash = md5(timestamp + privateKey + publicKey);
-
     try {
-      const response = await api.get(
-        `/v1/public/characters?ts=${timestamp}&apikey=${publicKey}&hash=${hash}`,
-        {
-          params: {
-            nameStartsWith,
-          },
-        }
-      );
-      const heroes = response.data.data.results;
-      this.setState({ heroes, loading: false });
+      const heroes = await Heroes.getCharactersName(nameStartsWith);
+      this.setState({ heroes, loading: false, noHero: false });
     } catch (error) {
-      this.setState({ loading: false });
-      toast.error('Ocorreu um erro, tente novamente mais tarde.');
+      this.setState({ loading: false, noHero: true });
     }
   };
 
   search = (event) => {
     event.persist();
+    event.preventDefault();
 
     if (!this.debouncedFn) {
       this.debouncedFn = _.debounce(() => {
@@ -105,16 +73,15 @@ class Home extends Component {
 
         if (searchString) return this.getCharactersName(searchString);
 
-        return this.getAllCharacters(0);
+        return this.getAllHeroes(0);
       }, 300);
     }
     this.debouncedFn();
   };
 
-  handleDetails = (hero) => {
-    const { getHeroByIdRequest } = this.props;
-
-    getHeroByIdRequest(hero);
+  selectHero = (hero) => {
+    const { selectHeroRequest } = this.props;
+    selectHeroRequest(hero);
   };
 
   handlePage = (page) => {
@@ -133,13 +100,13 @@ class Home extends Component {
   };
 
   render() {
-    const { heroes, page, lastPage, loading } = this.state;
+    const { heroes, page, lastPage, loading, noHero } = this.state;
 
     return (
       <Container>
         <h1>HERÓIS</h1>
 
-        <Form data-testid="hero-form" onChange={() => this.search}>
+        <Form data-testid="hero-form" onChange={this.search}>
           <input data-testid="hero-input" type="text" placeholder="Herói" />
 
           <SubmitButton>
@@ -150,7 +117,7 @@ class Home extends Component {
         {loading ? <Loading /> : ''}
 
         <NoHaveHero>
-          {heroes.length === 0 ? <p>Não achamos esse herói :(</p> : ''}
+          {noHero === 0 ? <p>Não achamos esse herói :(</p> : ''}
         </NoHaveHero>
 
         <CardGroup>
@@ -162,11 +129,11 @@ class Home extends Component {
               />
               <h3 data-testid="heros-name">{hero.name}</h3>
 
-              <Link onClick={() => this.handleDetails(hero)} to="/details">
+              <Link onClick={() => this.selectHero(hero)} to="/heroDetails">
                 Detalhes
               </Link>
 
-              <Link onClick={() => this.handleDetails(hero)} to="/editHero">
+              <Link onClick={() => this.selectHero(hero)} to="/editHero">
                 Editar
               </Link>
             </Card>
@@ -196,7 +163,7 @@ Home.propTypes = {
       id: PropTypes.number.isRequired,
     })
   ).isRequired,
-  getHeroByIdRequest: PropTypes.func.isRequired,
+  selectHeroRequest: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({

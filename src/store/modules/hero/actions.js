@@ -20,16 +20,16 @@ export function removeSerie(resourceURI) {
   };
 }
 
-export function getHeroByIdRequest(hero) {
+export function selectHeroRequest(hero) {
   return {
-    type: '@hero/BY_ID_REQUEST',
+    type: '@hero/SELECT_REQUEST',
     hero,
   };
 }
 
-export function getHeroByIdSuccess(hero) {
+export function selectHeroSuccess(hero) {
   return {
-    type: '@hero/BY_ID_SUCCESS',
+    type: '@hero/SELECT_SUCCESS',
     hero,
   };
 }

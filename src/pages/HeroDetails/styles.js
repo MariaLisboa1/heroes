@@ -41,7 +41,7 @@ export const ImageThumbnail = styled.div`
   }
 `;
 
-export const HeroDetails = styled.div`
+export const HeroDetail = styled.div`
   padding: 25px 120px;
 
   h1 {
