@@ -1,4 +1,5 @@
 import styled, { keyframes } from 'styled-components';
+import { makeStyles } from '@material-ui/core/styles';
 
 export const Container = styled.div`
   padding: 20px;
@@ -155,3 +156,18 @@ export const Loading = styled.div`
   height: 50px;
   animation: ${rotate} 2s linear infinite;
 `;
+
+export const useStylesTable = makeStyles({
+  table: {
+    minWidth: 650,
+  },
+});
+
+export const useStylesForm = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+      width: '25ch',
+    },
+  },
+}));

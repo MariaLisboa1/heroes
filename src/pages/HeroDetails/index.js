@@ -1,26 +1,29 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useSelector } from 'react-redux';
-import { Container, Detail, ImageThumbnail, HeroDetails } from './styles';
+import { Container, Detail, ImageThumbnail, HeroDetail } from './styles';
 
-export default function Details() {
+import Storage from '../../services/storage';
+
+export default function HeroDetails() {
   const [heroDetail, setHeroDetail] = useState([]);
 
   const hero = useSelector((state) => state.hero);
 
-  const saveStorage = useCallback(() => {
-    const storageHero = localStorage.getItem('hero');
+  function saveStorage() {
+    const storageHero = Storage.getStorage('hero');
 
     if (storageHero && storageHero.length > 2)
       return setHeroDetail(JSON.parse(storageHero));
 
     setHeroDetail(hero);
-    return localStorage.setItem('hero', JSON.stringify(hero));
-  }, [hero]);
+
+    return Storage.setStorage('hero', hero);
+  }
 
   useEffect(() => {
     saveStorage();
-  }, [saveStorage]);
+  }, []);
 
   return (
     <Container>
@@ -28,14 +31,13 @@ export default function Details() {
         <Detail key={detail.id}>
           <ImageThumbnail>
             <img
-              data-testid="hero-image"
               src={`${detail.thumbnail.path}.${detail.thumbnail.extension}`}
               alt=""
             />
             <h1 data-testid="hero-name">{detail.name}</h1>
           </ImageThumbnail>
 
-          <HeroDetails>
+          <HeroDetail>
             <h1>Descrição</h1>
             <p data-testid="hero-description">{detail.description}</p>
 
@@ -46,7 +48,7 @@ export default function Details() {
                 {serie.name}
               </p>
             ))}
-          </HeroDetails>
+          </HeroDetail>
         </Detail>
       ))}
     </Container>
